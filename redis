@@ -1,0 +1,7 @@
+set -e
+
+NAME=redis
+
+docker stop $NAME > /dev/null 2>&1 || true
+docker rm $NAME > /dev/null 2>&1 || true
+docker run --name $NAME --restart always -p 6379:6379 -d redis
