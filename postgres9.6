@@ -1,7 +1,8 @@
 set -e
 
+VOLUME=pgdata9.6
 NAME=postgres9.6
 
 docker stop $NAME > /dev/null 2>&1 || true
 docker rm $NAME > /dev/null 2>&1 || true
-docker run --name $NAME --restart always -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres:9.6
+docker run --name $NAME --restart always -e POSTGRES_PASSWORD=root -p 5432:5432 -v $VOLUME:/var/lib/postgresql/data -d postgres:9.6
