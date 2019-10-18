@@ -5,12 +5,15 @@ set -e
 VOLUME="mongodata3.4"
 NAME="mongo3.4"
 
-docker stop $NAME > /dev/null 2>$1 || true
-docker rm $NAME > /dev/null 2>&1 || true
+docker build -t $NAME ./mongo3.4
+
+docker stop $NAME || true
+docker rm $NAME || true
 
 docker run \
+  -d \
   --name $NAME \
   --restart always \
   -p 27017:27017 \
   -v $VOLUME:/data/db \
-  mongo-alpine
+  $NAME
