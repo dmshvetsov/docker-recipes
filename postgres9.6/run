@@ -4,6 +4,13 @@ set -e
 
 source ./common
 
+if test -z "$POSTGRES_ROOT_PASSWORD"
+then
+  echo "\$POSTGRES_ROOT_PASSWORD variable not found"
+  echo "Pleas define \$POSTGRES_ROOT_PASSWORD in your shell initialiaztion scripts like bash_profile"
+  exit 1
+fi
+
 VOLUME=pgdata9.6
 NAME=postgres9.6
 
@@ -11,7 +18,7 @@ docker stop $NAME > /dev/null 2>&1 || true
 docker rm $NAME > /dev/null 2>&1 || true
 docker run --name $NAME \
   --restart always \
-  -e POSTGRES_PASSWORD=root \
+  -e POSTGRES_PASSWORD=$POSTGRES_ROOT_PASSWORD \
   --network $CONTAINERS_LOCAL_NETWORK \
   -p 5432:5432 \
   -v $VOLUME:/var/lib/postgresql/data \
