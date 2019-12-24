@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+export CONTAINERS_LOCAL_NETWORK=local-net
+
+docker network create $CONTAINERS_LOCAL_NETWORK || true

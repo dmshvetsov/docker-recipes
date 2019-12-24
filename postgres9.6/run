@@ -2,6 +2,8 @@
 
 set -e
 
+source ./common
+
 VOLUME=pgdata9.6
 NAME=postgres9.6
 
@@ -10,7 +12,8 @@ docker rm $NAME > /dev/null 2>&1 || true
 docker run --name $NAME \
   --restart always \
   -e POSTGRES_PASSWORD=root \
+  --network $CONTAINERS_LOCAL_NETWORK \
   -p 5432:5432 \
   -v $VOLUME:/var/lib/postgresql/data \
   -d \
-  postgres:9.6 -c 'log_statement=all'
+  postgres:9.6
