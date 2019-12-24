@@ -22,5 +22,6 @@ docker run --name $NAME \
   --network $CONTAINERS_LOCAL_NETWORK \
   -p 5432:5432 \
   -v $VOLUME:/var/lib/postgresql/data \
+  -v "$PWD/postgres9.6/my-postgres9.6.conf":/etc/postgresql/postgresql.conf \
   -d \
-  postgres:9.6
+  postgres:9.6 -c 'config_file=/etc/postgresql/postgresql.conf'
