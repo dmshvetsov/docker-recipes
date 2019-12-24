@@ -20,7 +20,7 @@ then
   exit 1
 fi
 
-NAME=pghero--$PGHERO_DB
+NAME=pghero
 
 docker stop $NAME > /dev/null 2>&1 || true
 docker rm $NAME > /dev/null 2>&1 || true
