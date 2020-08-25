@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+VOLUME="mysql8"
+NAME="mysql8"
+IMAGE="mysql:8"
+
+docker stop $NAME || true
+docker rm $NAME || true
+
+docker run \
+  -d \
+  --name $NAME \
+  --restart always \
+  -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+  -p 3306:3306 \
+  -v $VOLUME:/var/lib/mysql \
+  $IMAGE
