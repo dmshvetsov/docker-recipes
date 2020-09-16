@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+VOLUME="localstack"
+NAME="aws-local"
+IMAGE="localstack/localstack"
+
+docker stop $NAME || true
+docker rm $NAME || true
+
+docker run \
+  -d \
+  --name $NAME \
+  --restart always \
+  $IMAGE
