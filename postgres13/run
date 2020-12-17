@@ -11,8 +11,8 @@ then
   exit 1
 fi
 
-VOLUME=pgdata9.6
-NAME=postgres9.6
+VOLUME=pgdata13
+NAME=postgres13
 
 docker stop $NAME > /dev/null 2>&1 || true
 docker rm $NAME > /dev/null 2>&1 || true
@@ -22,6 +22,5 @@ docker run --name $NAME \
   --network $CONTAINERS_LOCAL_NETWORK \
   -p 5432:5432 \
   -v $VOLUME:/var/lib/postgresql/data \
-  -v "$PWD/postgres9.6/my-postgres9.6.conf":/etc/postgresql/postgresql.conf \
   -d \
-  postgres:9.6 -c 'config_file=/etc/postgresql/postgresql.conf'
+  postgres:13.1
