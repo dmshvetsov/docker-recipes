@@ -14,6 +14,7 @@ docker run \
   -d \
   --name $NAME \
   --restart always \
+  --network dev-bridge \
   -p 27017:27017 \
   -v $VOLUME:/data/db \
   $NAME
