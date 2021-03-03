@@ -3,5 +3,6 @@
 set -e
 
 export CONTAINERS_LOCAL_NETWORK=local-net
+export DATA_PATH=~/data
 
 docker network create $CONTAINERS_LOCAL_NETWORK || true
