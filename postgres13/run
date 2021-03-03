@@ -20,7 +20,7 @@ docker run --name $NAME \
   --restart always \
   -e POSTGRES_PASSWORD=$POSTGRES_ROOT_PASSWORD \
   --network $CONTAINERS_LOCAL_NETWORK \
-  -p 5432:5432 \
+  -p 5413:5432 \
   -v $VOLUME:/var/lib/postgresql/data \
   -d \
   postgres:13.1
