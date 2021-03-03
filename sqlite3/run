@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+source ./common
+
+NAME=sqlite3
+
+docker stop $NAME > /dev/null 2>&1 || true
+docker rm $NAME > /dev/null 2>&1 || true
+docker run --name $NAME \
+  -v $DATA_PATH:/data/sqlite3 \
+  --rm \
+  -it \
+  keinos/sqlite3
