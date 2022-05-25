@@ -4,18 +4,34 @@ set -e
 
 VOLUME="mongodata4.2"
 NAME="mongo4.2"
-PORT=27042
+PORT=${PORT:=27017}
 
 docker build -t $NAME ./mongo4.2
 
 docker stop $NAME || true
 docker rm $NAME || true
 
-docker run \
-  -d \
-  --name $NAME \
-  --restart always \
-  --network dev-bridge \
-  -p $PORT:27017 \
-  -v $VOLUME:/data/db \
-  $NAME
+
+if [ -z ${REPLICA_SET+x} ];
+then
+  docker run \
+    -d \
+    --name $NAME \
+    --restart always \
+    --network dev-bridge \
+    -p $PORT:27017 \
+    -v $VOLUME:/data/db \
+    $NAME
+else
+  docker run \
+    -d \
+    --name $NAME \
+    --restart always \
+    --network dev-bridge \
+    -p $PORT:27017 \
+    -v $VOLUME:/data/db \
+    $NAME --replSet rs_mongo4_2_local
+  echo "initialize single node replica set, waiting for mongodb to start"
+  sleep 2 && docker exec -i $NAME mongo \
+    --eval "rs.initiate({ _id: \"rs_mongo4_2_local\", members: [{ _id: 0, host: \"localhost:27017\" }] })"
+fi
