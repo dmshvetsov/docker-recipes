@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e 
+
+VOLUME="mongodata4.2"
+NAME="mongo4.2"
+PORT=27042
+
+docker build -t $NAME ./mongo4.2
+
+docker stop $NAME || true
+docker rm $NAME || true
+
+docker run \
+  -d \
+  --name $NAME \
+  --restart always \
+  --network dev-bridge \
+  -p $PORT:27017 \
+  -v $VOLUME:/data/db \
+  $NAME
