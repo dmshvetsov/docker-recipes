@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+docker rmi -f simagix/keyhole
+
+id=$(docker create simagix/keyhole)
+
+docker cp $id:/dist - | tar vx -C ./build-keyhole/
+
+docker rm $id
+
+echo "builds are located in ./build-keyhole/dist"
